@@ -53,34 +53,5 @@
     </div>
 
     <a href="./page2.html" class="next-page"> <button>Next Page</button> </a>
-
-    <script>
-      const video = document.getElementById("myVideo");
-
-      // Wait until video metadata is loaded
-      video.addEventListener("loadeddata", function () {
-        video.currentTime = 10; // Set a time to capture frame, 1s is safe
-      });
-
-      video.addEventListener(
-        "seeked",
-        function captureFrame() {
-          const canvas = document.createElement("canvas");
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-          const dataURL = canvas.toDataURL(); // Get base64 image
-          video.setAttribute("poster", dataURL);
-
-          video.pause(); // Don't autoplay
-          video.currentTime = 0; // Reset back to start
-          video.removeEventListener("seeked", captureFrame);
-        },
-        { once: true }
-      );
-    </script>
   </body>
 </html>
