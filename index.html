@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a href="./page2.html" class="next-page"> <button>Next Page</button> </a>
+    <div class="gallery">
+      <div class="cnt">
+        <a href="./vids/p-21.mp4">1 number</a>
+        <video controls height="200" src="./vids/p-21.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-20.mp4">2 number</a>
+        <video id="myVideo" controls height="200" src="./vids/p-20.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-13.mp4">3 number</a>
+        <video controls height="200" src="./vids/p-13.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-7.mp4">4 number</a>
+        <video controls height="200" src="./vids/p-7.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-1.mp4">5 number</a>
+        <video controls height="200" src="./vids/p-1.mp4"></video>
+      </div>
+      <div class="cnt">
+        
+        <a href="./vids/p-6.mp4">6 number</a>
+        <video controls height="200" src="./vids/p-6.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-5.mp4">7 number</a>
+        <video controls height="200" src="./vids/p-5.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-15.mp4">8 number</a>
+        <video controls height="200" src="./vids/p-15.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-27.mp4">9 number</a> <br />
+        <video controls height="200" src="./vids/p-27.mp4"></video>
+      </div>
+      <div class="cnt">
+        <a href="./vids/p-2.mp4">10 number</a> <br />
+        <video controls height="200" src="./vids/p-2.mp4"></video>
+      </div>
+    </div>
+
+    <a href="./page2.html" class="next-page"> <button>Next Page</button> </a>
+
+    <script>
+      const video = document.getElementById("myVideo");
+
+      // Wait until video metadata is loaded
+      video.addEventListener("loadeddata", function () {
+        video.currentTime = 10; // Set a time to capture frame, 1s is safe
+      });
+
+      video.addEventListener(
+        "seeked",
+        function captureFrame() {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          const dataURL = canvas.toDataURL(); // Get base64 image
+          video.setAttribute("poster", dataURL);
+
+          video.pause(); // Don't autoplay
+          video.currentTime = 0; // Reset back to start
+          video.removeEventListener("seeked", captureFrame);
+        },
+        { once: true }
+      );
+    </script>
+  </body>
+</html>
